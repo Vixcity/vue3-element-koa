@@ -18,6 +18,9 @@ export default {
       this.$router.push("/welcome");
     },
   },
+  mounted() {
+    this.$api.get("/login", { name: "Vixcity" });
+  },
 };
 </script>
 
