@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1>登录页</h1>
-    <Welcome msg="jack" />
+    <Welcome />
     <el-button @click="goHome">返回首页</el-button>
   </div>
 </template>
