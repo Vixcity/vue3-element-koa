@@ -5,12 +5,14 @@ const json = require("koa-json");
 const onerror = require("koa-onerror");
 const bodyparser = require("koa-bodyparser");
 const logger = require("koa-logger");
-const log4js = require("./utils/log4j")
-const index = require("./routes/index");
+const log4js = require("./utils/log4j");
+const router = require("koa-router")();
 const users = require("./routes/users");
 
 // error handler
 onerror(app);
+
+require("./config/db");
 
 // middlewares
 app.use(
@@ -28,23 +30,26 @@ app.use(
   })
 );
 
-// app.use(() => {
-//   ctx.body = 'hello'
-// })
-
 // logger
 app.use(async (ctx, next) => {
   await next();
-  log4js.info('hello lo4js info')
+  log4js.info(
+    `${JSON.stringify(ctx.request.url).split('"')[1]} => ${
+      JSON.stringify(ctx.request.query) === "{}"
+        ? JSON.stringify(ctx.request.body)
+        : JSON.stringify(ctx.request.query)
+    }`
+  );
 });
 
 // routes
-app.use(index.routes(), index.allowedMethods());
-app.use(users.routes(), users.allowedMethods());
+router.prefix("/api");
+router.use(users.routes(), users.allowedMethods());
+app.use(router.routes(), router.allowedMethods());
 
 // error-handling
 app.on("error", (err, ctx) => {
-  log4js.error(`${err.stack}`)
+  log4js.error(`${err.stack}`);
 });
 
 module.exports = app;

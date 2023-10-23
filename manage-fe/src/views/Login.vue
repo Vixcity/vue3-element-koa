@@ -61,7 +61,7 @@ const login = async (userForm) => {
       $api.login(user).then((res) => {
         store.commit("saveUserInfo", res);
         router.push("/welcome");
-      });
+      })
     } else {
       return false;
     }
