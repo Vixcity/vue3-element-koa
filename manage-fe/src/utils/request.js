@@ -49,6 +49,9 @@ function request(options) {
   if (options.method.toLowerCase() === "get") {
     options.params = options.data;
   }
+  if (typeof options.mock !== "undefined") {
+    config.mock = options.mock;
+  }
 
   if (config.env === "prop") {
     service.defaults.baseURL = config.baseApi;
@@ -60,13 +63,8 @@ function request(options) {
 }
 
 ["get", "post", "put", "delete", "patch"].forEach((item) => {
-  request[item] = (url, data, options) => {
-    return request({
-      url,
-      data,
-      method: item,
-      ...options,
-    });
+  request[item] = (info) => {
+    return request({ ...info, method: item });
   };
 });
 
