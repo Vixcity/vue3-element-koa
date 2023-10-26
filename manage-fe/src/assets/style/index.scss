@@ -83,9 +83,6 @@ a {
 
 /* 滚动条样式 */
 ::-webkit-scrollbar {
-  width: 0!important;
-}
-::-webkit-scrollbar {
   width: 6px!important;
 }
 :hover::-webkit-scrollbar-thumb {

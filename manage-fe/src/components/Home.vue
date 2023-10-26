@@ -15,22 +15,7 @@
         text-color="#fff"
         :collapse="isCollapse"
       >
-        <el-sub-menu index="1">
-          <template #title>
-            <el-icon><setting /></el-icon>
-            <span>系统管理</span>
-          </template>
-          <el-menu-item index="1-1">用户管理</el-menu-item>
-          <el-menu-item index="1-2">菜单管理</el-menu-item>
-        </el-sub-menu>
-        <el-sub-menu index="2">
-          <template #title>
-            <el-icon><setting /></el-icon>
-            <span>审批管理</span>
-          </template>
-          <el-menu-item index="2-1">休假申请</el-menu-item>
-          <el-menu-item index="2-2">待我审批</el-menu-item>
-        </el-sub-menu>
+        <TreeMenu :userMenu="userMenu"/>
       </el-menu>
     </div>
     <div :class="['content-right', isCollapse ? 'fold' : 'unfold']">
@@ -45,7 +30,7 @@
           <div class="bread">面包屑</div>
         </div>
         <div class="user-info">
-          <el-badge :is-dot="true" class="notice">
+          <el-badge :is-dot="noticeCount > 0" class="notice">
             <el-icon><Bell /></el-icon>
           </el-badge>
           <el-dropdown @command="handleLogout">
@@ -73,24 +58,20 @@
 </template>
 
 <script setup>
-import { reactive, ref } from "vue";
+import { reactive, ref, inject, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import { useStore } from "vuex";
-
+import TreeMenu from "./TreeMenu.vue";
+const $api = inject("$api");
 const store = useStore(); // 获取store实例
 const router = useRouter(); // 获取router实例
 
-let userInfo = reactive({
-  userName: "Vixcity",
-  userEmail: "123456@qq.com",
-});
-
-const isCollapse = ref(false);
-
+let isCollapse = ref(false);
 const toggle = () => {
   isCollapse.value = !isCollapse.value;
 };
 
+let userInfo = reactive(store.state.userInfo);
 function handleLogout(key) {
   if (key === "email") return;
   store.commit("saveUserInfo", "");
@@ -100,26 +81,45 @@ function handleLogout(key) {
     userEmail: "",
   };
 }
+
+let noticeCount = ref(0);
+async function getNoticeCount() {
+  try {
+    const count = await $api.noticeCount();
+    noticeCount.value = count;
+  } catch (err) {
+    console.error(err);
+  }
+}
+
+let userMenu = reactive([]);
+async function getMenuList() {
+  try {
+    userMenu = await $api.getMenuList();
+  } catch (err) {
+    console.error(err);
+  }
+}
+
+onMounted(() => {
+  getNoticeCount();
+  getMenuList();
+});
 </script>
 
 <style lang="scss">
 .basic_layout {
   position: relative;
-  &::-webkit-scrollbar{
-    width: 6px!important;
-  }
   .nav-side {
     position: fixed;
     height: 100vh;
     background-color: #001529;
     color: #fff;
-    overflow-y: auto;
     transition: width 0.5s;
-    overflow-x: hidden;
-    &.fold{
+    &.fold {
       width: 64px;
     }
-    &.unfold{
+    &.unfold {
       width: 200px;
     }
     .logo {
@@ -135,15 +135,17 @@ function handleLogout(key) {
     }
     .nav-menu {
       height: calc(100vh - 50px);
+      overflow-y: auto;
+      overflow-x: hidden;
       border-right: none;
     }
   }
   .content-right {
-    transition: all .5s;
-    &.fold{
+    transition: all 0.5s;
+    &.fold {
       margin-left: 64px;
     }
-    &.unfold{
+    &.unfold {
       margin-left: 200px;
     }
     .nav-top {

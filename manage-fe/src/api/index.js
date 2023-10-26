@@ -10,4 +10,16 @@ export default {
       data,
     });
   },
+  noticeCount(data) {
+    return request.get({
+      url: "/leave/count",
+      data,
+    });
+  },
+  getMenuList(data) {
+    return request.get({
+      url: "/menu/list",
+      data,
+    });
+  },
 };
