@@ -52,7 +52,7 @@ let rules = reactive({
 const userForm = ref();
 const $api = inject("$api");
 const store = useStore(); // 获取store实例
-const router = useRouter(); // 获取store实例
+const router = useRouter(); // 获取router实例
 
 const login = async (userForm) => {
   if (!userForm) return;
