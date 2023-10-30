@@ -11,7 +11,7 @@
         background-color="#001529"
         class="nav-menu"
         router
-        default-active="2"
+        :default-active="activeMenu"
         text-color="#fff"
         :collapse="isCollapse"
       >
@@ -65,6 +65,7 @@ import TreeMenu from "./TreeMenu.vue";
 const $api = inject("$api");
 const store = useStore(); // 获取store实例
 const router = useRouter(); // 获取router实例
+const activeMenu = location.hash.slice(1)
 
 let isCollapse = ref(false);
 const toggle = () => {
@@ -92,10 +93,10 @@ async function getNoticeCount() {
   }
 }
 
-let userMenu = reactive([]);
+let userMenu = ref([]);
 async function getMenuList() {
   try {
-    userMenu = await $api.getMenuList();
+    userMenu.value = await $api.getMenuList();
   } catch (err) {
     console.error(err);
   }
