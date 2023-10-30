@@ -3,9 +3,9 @@
  */
 
 import axios from "axios";
-import config from "../config";
+import config from "@/config";
 import { ElMessage } from "element-plus";
-import router from "../router";
+import router from "@/router";
 const TOKEN_INVALID = "Token认证失败，请重新登录";
 const NETWORK_ERROR = "网络请求异常，请稍后重试";
 

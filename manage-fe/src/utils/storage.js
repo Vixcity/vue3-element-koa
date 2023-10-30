@@ -3,7 +3,7 @@
  * @author Vixcity
  */
 
-import config from "../config";
+import config from "@/config";
 
 export default {
   setItem(key, val) {

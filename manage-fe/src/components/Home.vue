@@ -2,7 +2,7 @@
   <div class="basic_layout">
     <div :class="['nav-side', isCollapse ? 'fold' : 'unfold']">
       <div class="logo">
-        <img src="../assets/logo.png" alt="" />
+        <img src="@/assets/logo.png" alt="" />
         <span>Manage</span>
       </div>
       <!-- 导航菜单 -->
