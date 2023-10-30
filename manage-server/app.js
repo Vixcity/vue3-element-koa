@@ -8,6 +8,8 @@ const logger = require("koa-logger");
 const log4js = require("./utils/log4j");
 const router = require("koa-router")();
 const users = require("./routes/users");
+const koajwt = require("koa-jwt");
+const utils = require("./utils/utils");
 
 // error handler
 onerror(app);
@@ -32,7 +34,6 @@ app.use(
 
 // logger
 app.use(async (ctx, next) => {
-  await next();
   log4js.info(
     `${JSON.stringify(ctx.request.url).split('"')[1]} => ${
       JSON.stringify(ctx.request.query) === "{}"
@@ -40,9 +41,20 @@ app.use(async (ctx, next) => {
         : JSON.stringify(ctx.request.query)
     }`
   );
+  await next().catch((err) => {
+    if (err.status === 401) {
+      ctx.status = 200
+      ctx.body = utils.fail("Token 认证失败", utils.CODE.AUTH_ERROR);
+    } else {
+      throw err;
+    }
+  });
 });
 
 // routes
+app.use(koajwt({ secret: "Vixcity" }).unless({
+  path: [/^\/api\/users\/login/]
+}));
 router.prefix("/api");
 router.use(users.routes(), users.allowedMethods());
 app.use(router.routes(), router.allowedMethods());
