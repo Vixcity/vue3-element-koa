@@ -9,7 +9,10 @@
       :index="menu.path"
     >
       <template #title>
-        <el-icon><setting /></el-icon>
+        <el-icon>
+          <setting v-if="menu.icon=='el-icon-setting'"/>
+          <Promotion v-else-if="menu.icon=='el-icon-s-promotion'"/>
+        </el-icon>
         <span>{{ menu.menuName }}</span>
       </template>
       <TreeMenu :userMenu="menu.children" />

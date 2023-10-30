@@ -27,7 +27,9 @@
           <div class="menu-fold" @click="toggle" v-show="!isCollapse">
             <el-icon><Fold /></el-icon>
           </div>
-          <div class="bread">面包屑</div>
+          <div class="bread">
+            <BreadCrumb />
+          </div>
         </div>
         <div class="user-info">
           <el-badge :is-dot="noticeCount > 0" class="notice">
@@ -62,6 +64,7 @@ import { reactive, ref, inject, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import { useStore } from "vuex";
 import TreeMenu from "./TreeMenu.vue";
+import BreadCrumb from "./BreadCrumb.vue";
 const $api = inject("$api");
 const store = useStore(); // 获取store实例
 const router = useRouter(); // 获取router实例
