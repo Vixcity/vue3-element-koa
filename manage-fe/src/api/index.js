@@ -14,12 +14,14 @@ export default {
     return request.get({
       url: "/leave/count",
       data,
+      mock: true
     });
   },
   getMenuList(data) {
     return request.get({
       url: "/menu/list",
       data,
+      mock: true
     });
   },
 };

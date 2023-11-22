@@ -184,7 +184,6 @@ onMounted(() => {
       background-color: #eef0f3;
       padding: 20px;
       .main-page {
-        background: #fff;
         height: calc(100vh - 90px);
         overflow-y: auto;
       }

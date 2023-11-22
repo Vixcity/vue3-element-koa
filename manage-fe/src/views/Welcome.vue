@@ -21,6 +21,7 @@ export default {
 
 <style lang="scss">
 .welcome {
+  background-color: #fff;
   display: flex;
   justify-content: center;
   align-items: center;

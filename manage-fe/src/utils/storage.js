@@ -18,7 +18,7 @@ export default {
     return this.getStorage()[key];
   },
   getStorage() {
-    return JSON.parse(window.localStorage.getItem(config.namespace) || "{}");
+    return JSON.parse(window.localStorage.getItem(config.namespace) || '{"userInfo":{"token":""}}');
   },
   clearItem(key) {
     let storage = this.getStorage();
