@@ -24,4 +24,11 @@ export default {
       mock: true
     });
   },
+  getUserList(data) {
+    return request.get({
+      url: "/users/list",
+      data,
+      mock: true
+    });
+  },
 };
