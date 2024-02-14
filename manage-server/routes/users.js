@@ -48,4 +48,206 @@ router.post("/login", async (ctx) => {
   }
 });
 
+router.get("/list", async (ctx) => {
+  const data = {
+    page: {
+      pageNum: 1,
+      pageSize: 10,
+      total: 24,
+    },
+    list: [
+      {
+        state: 3,
+        role: 1,
+        roleList: [
+          "60180b07b1eaed6c45fbebdb",
+          "60150cb764de99631b2c3cd3",
+          "60180b59b1eaed6c45fbebdc",
+        ],
+        deptId: ["60167059c9027b7d2c520a61", "60167345c6a4417f2d27506f"],
+        userId: 1000002,
+        userName: "admin",
+        userEmail: "admin@imooc.com",
+        createTime: "2021-01-17T13:32:06.381Z",
+        lastLoginTime: "2021-01-17T13:32:06.381Z",
+        __v: 0,
+        job: "前端架构师",
+        mobile: "17611020000",
+      },
+      {
+        state: 2,
+        role: 1,
+        roleList: [
+          "60180b07b1eaed6c45fbebdb",
+          "60150cb764de99631b2c3cd3",
+          "60180b59b1eaed6c45fbebdc",
+        ],
+        deptId: ["60167059c9027b7d2c520a61", "60167345c6a4417f2d27506f"],
+        userId: 1000003,
+        userName: "admin",
+        userEmail: "admin@imooc.com",
+        createTime: "2021-01-17T13:32:06.381Z",
+        lastLoginTime: "2021-01-17T13:32:06.381Z",
+        __v: 0,
+        job: "前端架构师",
+        mobile: "17611020000",
+      },
+      {
+        state: 2,
+        role: 0,
+        roleList: [
+          "60180b07b1eaed6c45fbebdb",
+          "60150cb764de99631b2c3cd3",
+          "60180b59b1eaed6c45fbebdc",
+        ],
+        deptId: ["60167059c9027b7d2c520a61", "60167345c6a4417f2d27506f"],
+        userId: 1000004,
+        userName: "admin",
+        userEmail: "admin@imooc.com",
+        createTime: "2021-01-17T13:32:06.381Z",
+        lastLoginTime: "2021-01-17T13:32:06.381Z",
+        __v: 0,
+        job: "前端架构师",
+        mobile: "17611020000",
+      },
+      {
+        state: 2,
+        role: 0,
+        roleList: [
+          "60180b07b1eaed6c45fbebdb",
+          "60150cb764de99631b2c3cd3",
+          "60180b59b1eaed6c45fbebdc",
+        ],
+        deptId: ["60167059c9027b7d2c520a61", "60167345c6a4417f2d27506f"],
+        userId: 1000005,
+        userName: "admin",
+        userEmail: "admin@imooc.com",
+        createTime: "2021-01-17T13:32:06.381Z",
+        lastLoginTime: "2021-01-17T13:32:06.381Z",
+        __v: 0,
+        job: "前端架构师",
+        mobile: "17611020000",
+      },
+      {
+        state: 2,
+        role: 0,
+        roleList: [
+          "60180b07b1eaed6c45fbebdb",
+          "60150cb764de99631b2c3cd3",
+          "60180b59b1eaed6c45fbebdc",
+        ],
+        deptId: ["60167059c9027b7d2c520a61", "60167345c6a4417f2d27506f"],
+        userId: 1000006,
+        userName: "admin",
+        userEmail: "admin@imooc.com",
+        createTime: "2021-01-17T13:32:06.381Z",
+        lastLoginTime: "2021-01-17T13:32:06.381Z",
+        __v: 0,
+        job: "前端架构师",
+        mobile: "17611020000",
+      },
+      {
+        state: 3,
+        role: 1,
+        roleList: [
+          "60180b07b1eaed6c45fbebdb",
+          "60150cb764de99631b2c3cd3",
+          "60180b59b1eaed6c45fbebdc",
+        ],
+        deptId: ["60167059c9027b7d2c520a61", "60167345c6a4417f2d27506f"],
+        userId: 1000007,
+        userName: "admin",
+        userEmail: "admin@imooc.com",
+        createTime: "2021-01-17T13:32:06.381Z",
+        lastLoginTime: "2021-01-17T13:32:06.381Z",
+        __v: 0,
+        job: "前端架构师",
+        mobile: "17611020000",
+      },
+      {
+        state: 2,
+        role: 0,
+        roleList: [
+          "60180b07b1eaed6c45fbebdb",
+          "60150cb764de99631b2c3cd3",
+          "60180b59b1eaed6c45fbebdc",
+        ],
+        deptId: ["60167059c9027b7d2c520a61", "60167345c6a4417f2d27506f"],
+        userId: 1000008,
+        userName: "admin",
+        userEmail: "admin@imooc.com",
+        createTime: "2021-01-17T13:32:06.381Z",
+        lastLoginTime: "2021-01-17T13:32:06.381Z",
+        __v: 0,
+        job: "前端架构师",
+        mobile: "17611020000",
+      },
+      {
+        state: 2,
+        role: 1,
+        roleList: [
+          "60180b07b1eaed6c45fbebdb",
+          "60150cb764de99631b2c3cd3",
+          "60180b59b1eaed6c45fbebdc",
+        ],
+        deptId: ["60167059c9027b7d2c520a61", "60167345c6a4417f2d27506f"],
+        userId: 1000009,
+        userName: "admin",
+        userEmail: "admin@imooc.com",
+        createTime: "2021-01-17T13:32:06.381Z",
+        lastLoginTime: "2021-01-17T13:32:06.381Z",
+        __v: 0,
+        job: "前端架构师",
+        mobile: "17611020000",
+      },
+      {
+        state: 1,
+        role: 1,
+        roleList: [
+          "60180b07b1eaed6c45fbebdb",
+          "60150cb764de99631b2c3cd3",
+          "60180b59b1eaed6c45fbebdc",
+        ],
+        deptId: ["60167059c9027b7d2c520a61", "60167345c6a4417f2d27506f"],
+        userId: 1000010,
+        userName: "admin",
+        userEmail: "admin@imooc.com",
+        createTime: "2021-01-17T13:32:06.381Z",
+        lastLoginTime: "2021-01-17T13:32:06.381Z",
+        __v: 0,
+        job: "前端架构师",
+        mobile: "17611020000",
+      },
+      {
+        state: 2,
+        role: 0,
+        roleList: [
+          "60180b07b1eaed6c45fbebdb",
+          "60150cb764de99631b2c3cd3",
+          "60180b59b1eaed6c45fbebdc",
+        ],
+        deptId: ["60167059c9027b7d2c520a61", "60167345c6a4417f2d27506f"],
+        userId: 1000011,
+        userName: "admin",
+        userEmail: "admin@imooc.com",
+        createTime: "2021-01-17T13:32:06.381Z",
+        lastLoginTime: "2021-01-17T13:32:06.381Z",
+        __v: 0,
+        job: "前端架构师",
+        mobile: "17611020000",
+      },
+    ],
+  };
+  ctx.body = utils.success(data);
+});
+
+router.post("/delete", async (ctx) => {
+  console.log(ctx)
+  const data = {
+    nModified: 1,
+  };
+
+  ctx.body = utils.success(data, "删除成功1条");
+});
+
 module.exports = router;

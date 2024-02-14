@@ -14,21 +14,28 @@ export default {
     return request.get({
       url: "/leave/count",
       data,
-      mock: true
+      mock: false
     });
   },
   getMenuList(data) {
     return request.get({
       url: "/menu/list",
       data,
-      mock: true
+      mock: false
     });
   },
   getUserList(data) {
     return request.get({
       url: "/users/list",
       data,
-      mock: true
+      mock: false
+    });
+  },
+  userDel(data) {
+    return request.post({
+      url: "/users/delete",
+      data,
+      mock: false
     });
   },
 };

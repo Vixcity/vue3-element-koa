@@ -8,6 +8,8 @@ const logger = require("koa-logger");
 const log4js = require("./utils/log4j");
 const router = require("koa-router")();
 const users = require("./routes/users");
+const leave = require("./routes/leave");
+const menu = require("./routes/menu");
 const koajwt = require("koa-jwt");
 const utils = require("./utils/utils");
 
@@ -57,6 +59,8 @@ app.use(koajwt({ secret: "Vixcity" }).unless({
 }));
 router.prefix("/api");
 router.use(users.routes(), users.allowedMethods());
+router.use(leave.routes(), leave.allowedMethods());
+router.use(menu.routes(), menu.allowedMethods());
 app.use(router.routes(), router.allowedMethods());
 
 // error-handling
