@@ -48,6 +48,12 @@ router.post("/login", async (ctx) => {
   }
 });
 
+router.post("/operate", async (ctx) => {
+  const data = '创建/修改成功';
+
+  ctx.body = utils.success(data);
+});
+
 router.get("/list", async (ctx) => {
   const data = {
     page: {
@@ -242,7 +248,7 @@ router.get("/list", async (ctx) => {
 });
 
 router.post("/delete", async (ctx) => {
-  console.log(ctx)
+  console.log(ctx);
   const data = {
     nModified: 1,
   };

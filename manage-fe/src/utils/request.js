@@ -25,23 +25,34 @@ service.interceptors.request.use((req) => {
   return req;
 });
 
-// 相应拦截
-service.interceptors.response.use((res) => {
-  const { code, data, msg } = res.data;
+// 响应拦截
+service.interceptors.response.use(
+  (res) => {
+    const { code, data, msg } = res.data;
 
-  if (code === 200) {
-    return data;
-  } else if (code === 50001) {
-    ElMessage.error(TOKEN_INVALID);
-    setTimeout(() => {
-      router.push("./login");
-    }, 1500);
-    return Promise.reject(TOKEN_INVALID);
-  } else {
-    ElMessage.error(msg || NETWORK_ERROR);
-    return Promise.reject(msg || NETWORK_ERROR);
+    if (code === 200) {
+      return data;
+    } else if (code === 50001) {
+      ElMessage.error(TOKEN_INVALID);
+      setTimeout(() => {
+        router.push("./login");
+      }, 1500);
+      return Promise.reject(TOKEN_INVALID);
+    } else {
+      ElMessage.error(msg || NETWORK_ERROR);
+      return Promise.reject(msg || NETWORK_ERROR);
+    }
+  },
+  (err) => {
+    if (err.response.status === 404) {
+      ElMessage.error(NETWORK_ERROR);
+      return Promise.reject(NETWORK_ERROR);
+    } else {
+      ElMessage.error(err || NETWORK_ERROR);
+      return Promise.reject(err || NETWORK_ERROR);
+    }
   }
-});
+);
 
 /**
  * 请求核心函数

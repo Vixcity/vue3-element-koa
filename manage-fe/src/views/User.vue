@@ -18,7 +18,7 @@
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="handleQuery">查询</el-button>
-          <el-button @click="handleReset">重置</el-button>
+          <el-button @click="handleReset('form')">重置</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -29,40 +29,20 @@
       </div>
       <el-table :data="userList" @selection-change="handleSelectionChange">
         <el-table-column type="selection" width="55" />
-        <el-table-column
-          v-for="item in columns"
-          :key="item.prop"
-          :prop="item.prop"
-          :label="item.label"
-          :width="item.width"
-          :formatter="item.formatter"
-        />
+        <el-table-column v-for="item in columns" :key="item.prop" :prop="item.prop" :label="item.label"
+          :width="item.width" :formatter="item.formatter" />
         <el-table-column label="操作" width="150">
           <template #default="scope">
-            <el-button size="small" @click="handleClick"> 编辑 </el-button>
-            <el-button size="small" @click="handleDel(scope.row)" type="danger"
-              >删除</el-button
-            >
+            <el-button size="small"> 编辑 </el-button>
+            <el-button size="small" @click="handleDel(scope.row)" type="danger">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
-      <el-pagination
-        class="pagination"
-        :total="pager.total"
-        :current-page="pager.pageNum"
-        :page-size="pager.pageSize"
-        @current-change="handleCurrentChange"
-        layout="prev,pager,next,jumper"
-        background
-      />
+      <el-pagination class="pagination" :total="pager.total" :current-page="pager.pageNum" :page-size="pager.pageSize"
+        @current-change="handleCurrentChange" layout="prev,pager,next,jumper" background />
     </div>
     <el-dialog title="新增用户" v-model="showModel">
-      <el-form
-        ref="dialogForm"
-        :model="userForm"
-        label-width="100px"
-        :rules="rules"
-      >
+      <el-form ref="dialogForm" :model="userForm" label-width="100px" :rules="rules">
         <el-form-item label="用户名" prop="userName">
           <el-input v-model="userForm.userName" placeholder="请输入用户名称" />
         </el-form-item>
@@ -85,27 +65,19 @@
           </el-select>
         </el-form-item>
         <el-form-item label="系统角色" prop="roleList">
-          <el-select
-            v-model="userForm.roleList"
-            placeholder="请选择用户系统角色"
-          >
-            <el-option :value="1" label="在职"></el-option>
+          <el-select v-model="userForm.roleList" placeholder="请选择用户系统角色" multiple style="width: 100%;">
+            <el-option v-for="detp in roleList" :key="detp._id" :value="detp._id" :label="detp.roleName"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="部门" prop="deptId">
-          <el-cascader
-            v-model="userForm.deptId"
-            placeholder="请选择所属部门"
-            :options="[]"
-            :props="{ checkStrictly: true, value: '_id', label: 'deptName' }"
-            clearable
-          />
+          <el-cascader v-model="userForm.deptId" placeholder="请选择所属部门" :options="deptList"
+            :props="{ checkStrictly: true, value: '_id', label: 'deptName' }" clearable style="width: 100%;" />
         </el-form-item>
       </el-form>
       <template #footer>
         <div class="dialog-footer">
-          <el-button>取消</el-button>
-          <el-button type="primary"> 确定 </el-button>
+          <el-button @click="handleClose">取消</el-button>
+          <el-button type="primary" @click="handleSubmit"> 确定 </el-button>
         </div>
       </template>
     </el-dialog>
@@ -113,7 +85,7 @@
 </template>
 
 <script setup>
-import { getCurrentInstance, inject, onMounted, reactive, ref } from "vue";
+import { getCurrentInstance, inject, onMounted, reactive, ref, toRaw } from "vue";
 import { ElMessage } from "element-plus";
 
 // 初始化 <------------> 开始
@@ -185,6 +157,12 @@ const showModel = ref(false);
 const userForm = reactive({
   state: 3
 });
+// 所有角色列表
+const roleList = ref([]);
+// 所有部门列表
+const deptList = ref([]);
+// 定义用户操作行为
+const action = ref('add')
 // 定义表单校验规则
 const rules = reactive({
   userName: [
@@ -236,9 +214,8 @@ const handleQuery = () => {
 };
 
 // 重置查询表单
-const handleReset = () => {
-  console.log(ctx.$refs.form);
-  ctx.$refs.form.resetFields();
+const handleReset = (form) => {
+  ctx.$refs[form].resetFields();
 };
 
 // 分页事件处理
@@ -279,13 +256,49 @@ const handleSelectionChange = (list) => {
   checkedUserIds.value = list.map((item) => item.userId);
 };
 
+// 用户新增
 const handleCreate = () => {
   showModel.value = true;
 };
 
+const getDeptList = async () => {
+  let list = await $api.getDeptList()
+  deptList.value = list
+}
+
+// 角色列表查询
+const getRoleList = async () => {
+  let list = await $api.getRoleList()
+  roleList.value = list
+}
+
+// 用户弹窗关闭
+const handleClose = () => {
+  showModel.value = false
+  handleReset('dialogForm')
+}
+// 用户提交
+const handleSubmit = () => {
+  ctx.$refs.dialogForm.validate(async (valid) => {
+    if (valid) {
+      let params = toRaw(userForm);
+      params.userEmail += '@qq.com'
+      params.action = action.value
+      let res = await $api.userSubmit(params);
+      if (res) {
+        handleClose()
+        ElMessage.success('用户创建成功')
+        getUserList()
+      }
+    }
+  })
+}
+
 // 初始化接口调用
 onMounted(() => {
   getUserList();
+  getDeptList();
+  getRoleList();
 });
 </script>
 

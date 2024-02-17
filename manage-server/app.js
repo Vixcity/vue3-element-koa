@@ -10,6 +10,8 @@ const router = require("koa-router")();
 const users = require("./routes/users");
 const leave = require("./routes/leave");
 const menu = require("./routes/menu");
+const dept = require("./routes/dept");
+const roles = require("./routes/roles");
 const koajwt = require("koa-jwt");
 const utils = require("./utils/utils");
 
@@ -61,6 +63,8 @@ router.prefix("/api");
 router.use(users.routes(), users.allowedMethods());
 router.use(leave.routes(), leave.allowedMethods());
 router.use(menu.routes(), menu.allowedMethods());
+router.use(dept.routes(), dept.allowedMethods());
+router.use(roles.routes(), roles.allowedMethods());
 app.use(router.routes(), router.allowedMethods());
 
 // error-handling
